@@ -4,6 +4,12 @@ import json
 import os
 
 def fetch_website_content(url):
+    """
+    Fetches the content of a website and returns the job titles
+
+    Args:
+        url (str): The URL of the website to fetch
+    """
     response = requests.get(url)
     response.raise_for_status()  # Raises an HTTPError for bad responses
 
@@ -21,16 +27,35 @@ def fetch_website_content(url):
     return job_titles
 
 def save_jobs(jobs):
+    """
+    Saves the job titles to a JSON file
+
+    Args:
+        jobs (list): A list of job titles to save
+    """
     with open('job_titles.json', 'w') as file:
         json.dump(jobs, file)
 
 def load_previous_jobs():
+    """
+    Loads the previously saved job titles from a JSON file
+
+    Returns:
+        list: A list of job titles
+    """
     if os.path.exists('job_titles.json'):
         with open('job_titles.json', 'r') as file:
             return json.load(file)
     return []
 
 def compare_jobs(current_jobs, previous_jobs):
+    """
+    Compares the current job titles with the previous job titles
+
+    Args:
+        current_jobs (list): A list of current job titles
+        previous_jobs (list): A list of previous job titles
+    """
     current_set = set(current_jobs)
     previous_set = set(previous_jobs)
 
@@ -61,8 +86,11 @@ def compare_jobs(current_jobs, previous_jobs):
             print(job)
         print('-' * 80)
 
-def job():
-    url = "https://www.royalgazette.com/jobs/"
+def job(url):
+    """
+    Main function to fetch, compare, and save job titles
+    """
+
     current_jobs = fetch_website_content(url)
     if current_jobs is None:
         return
@@ -71,4 +99,5 @@ def job():
     compare_jobs(current_jobs, previous_jobs)
     save_jobs(current_jobs)
 
-job()
+if __name__ == '__main__':
+    job(url="https://www.royalgazette.com/jobs/")
