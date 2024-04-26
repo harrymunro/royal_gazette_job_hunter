@@ -25,17 +25,21 @@ If you have Poetry installed, you can easily handle dependencies through it:
    poetry install
    ```
 
-With pip
+### With pip
 
 If you're not using Poetry, you can install the required libraries using pip:
-'pip install requests beautifulsoup4'
+```bash
+   pip install requests beautifulsoup4
+   ```
 
-Usage
+### Usage
 
 To run the script, navigate to the source directory and execute main.py:
-'python src/main.py'
+```bash
+   python src/main.py
+   ```
 
-How It Works
+### How It Works
 
 Upon execution, the script:
 
