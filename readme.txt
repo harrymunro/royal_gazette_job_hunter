@@ -17,8 +17,8 @@ If you have Poetry installed, you can easily handle dependencies through it:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/royal-gazette-job-hunter.git
-   cd royal-gazette-job-hunter
+   git clone https://github.com/harrymunro/royal_gazette_job_hunter.git
+   cd royal_gazette_job_hunter
 
 2. Install dependencies:
    ```bash
