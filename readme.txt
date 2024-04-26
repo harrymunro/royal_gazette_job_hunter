@@ -1,3 +1,7 @@
+# Royal Gazette Job Hunter
+
+## Making checking the Royal Gazette job board slightly easier.
+
 This simple script by default checks the Royal Gazette Job board https://www.royalgazette.com/jobs/ and
 tells the user whether any new jobs have been found or old ones removed since the last time the script was run.
 
