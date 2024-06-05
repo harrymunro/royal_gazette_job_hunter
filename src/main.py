@@ -126,10 +126,9 @@ def job(url):
 if __name__ == '__main__':
     jobs_data = job(url="https://www.royalgazette.com/jobs/")
 
-    """
     # Example usage within your script
-    content = "This is the content you scraped from the website"
-    subject = "Daily Scrape Results"
+    content = jobs_data
+    subject = "Royal Gazette Daily Job Updates"
     to_email = "recipient@example.com"
     from_email = "your_email@example.com"
     smtp_server = "smtp.example.com"
@@ -138,4 +137,3 @@ if __name__ == '__main__':
     smtp_password = "your_email_password"
 
     send_email(subject, content, to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_password)
-    """
