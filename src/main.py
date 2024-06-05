@@ -2,6 +2,24 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+def send_email(subject, body, to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_password):
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    server = smtplib.SMTP(smtp_server, smtp_port)
+    server.starttls()
+    server.login(smtp_user, smtp_password)
+    text = msg.as_string()
+    server.sendmail(from_email, to_email, text)
+    server.quit()
 
 def fetch_website_content(url):
     """
@@ -62,29 +80,35 @@ def compare_jobs(current_jobs, previous_jobs):
     new_jobs = current_set.difference(previous_set)
     removed_jobs = previous_set.difference(current_set)
 
+    output = ""
+
     if new_jobs:
-        print("New jobs found:")
+        output += "New jobs found:\n"
         for job in new_jobs:
-            print(job)
-        print('-' * 80)
+            output += f"{job}\n"
+        output += '-' * 80 + '\n'
     else:
-        print("No new jobs found.\n")
+        output += "No new jobs found.\n\n"
 
     if removed_jobs:
-        print("Jobs removed:")
+        output += "Jobs removed:\n"
         for job in removed_jobs:
-            print(job)
-        print('-' * 80)
+            output += f"{job}\n"
+        output += '-' * 80 + '\n'
     else:
-        print("No jobs removed.\n")
+        output += "No jobs removed.\n\n"
 
     # Print current jobs excluding new jobs
     existing_jobs = current_set.difference(new_jobs)
     if existing_jobs:
-        print("Existing jobs:")
+        output += "Existing jobs:\n"
         for job in existing_jobs:
-            print(job)
-        print('-' * 80)
+            output += f"{job}\n"
+        output += '-' * 80 + '\n'
+
+    # Print the output
+    print(output)
+    return output
 
 def job(url):
     """
@@ -100,4 +124,18 @@ def job(url):
     save_jobs(current_jobs)
 
 if __name__ == '__main__':
-    job(url="https://www.royalgazette.com/jobs/")
+    jobs_data = job(url="https://www.royalgazette.com/jobs/")
+
+    """
+    # Example usage within your script
+    content = "This is the content you scraped from the website"
+    subject = "Daily Scrape Results"
+    to_email = "recipient@example.com"
+    from_email = "your_email@example.com"
+    smtp_server = "smtp.example.com"
+    smtp_port = 587
+    smtp_user = "your_email@example.com"
+    smtp_password = "your_email_password"
+
+    send_email(subject, content, to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_password)
+    """
