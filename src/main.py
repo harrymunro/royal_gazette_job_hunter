@@ -111,24 +111,16 @@ def compare_jobs(current_jobs, previous_jobs):
     print(output)
     return output
 
-def job(url):
-    """
-    Main function to fetch, compare, and save job titles
-    """
-
+def job(request):
+    url = "https://www.royalgazette.com/jobs/"
     current_jobs = fetch_website_content(url)
     if current_jobs is None:
-        return
+        return "No job listings found."
 
     previous_jobs = load_previous_jobs()
-    compare_jobs(current_jobs, previous_jobs)
+    content = compare_jobs(current_jobs, previous_jobs)
     save_jobs(current_jobs)
 
-if __name__ == '__main__':
-    jobs_data = job(url="https://www.royalgazette.com/jobs/")
-
-    # Example usage within your script
-    content = jobs_data
     subject = "Royal Gazette Daily Job Updates"
     to_email = "recipient@example.com"
     from_email = "your_email@example.com"
@@ -138,3 +130,4 @@ if __name__ == '__main__':
     smtp_password = "your_email_password"
 
     send_email(subject, content, to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_password)
+    return "Job updates sent."
