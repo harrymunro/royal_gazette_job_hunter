@@ -15,11 +15,12 @@ def send_email(subject, body, to_email, from_email, smtp_server, smtp_port, smtp
     msg.attach(MIMEText(body, 'plain'))
 
     server = smtplib.SMTP(smtp_server, smtp_port)
+    server.ehlo()
     server.starttls()
     server.login(smtp_user, smtp_password)
     text = msg.as_string()
     server.sendmail(from_email, to_email, text)
-    server.quit()
+    server.close()
 
 def fetch_website_content(url):
     """
