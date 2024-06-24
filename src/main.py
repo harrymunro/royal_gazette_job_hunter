@@ -1,3 +1,4 @@
+import json
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -5,6 +6,12 @@ import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+def load_config(file_path='local_config_private.json'):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+config = load_config()
 
 def send_email(subject, body, to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_password):
     msg = MIMEMultipart()
@@ -112,7 +119,7 @@ def compare_jobs(current_jobs, previous_jobs):
     return output
 
 def job(request):
-    url = "https://www.royalgazette.com/jobs/"
+    url=config['url']
     current_jobs = fetch_website_content(url)
     if current_jobs is None:
         return "No job listings found."
@@ -122,12 +129,16 @@ def job(request):
     save_jobs(current_jobs)
 
     subject = "Royal Gazette Daily Job Updates"
-    to_email = "recipient@example.com"
-    from_email = "your_email@example.com"
-    smtp_server = "smtp.example.com"
-    smtp_port = 587
-    smtp_user = "your_email@example.com"
-    smtp_password = "your_email_password"
+    to_email = config['smtp']['to_email']
+    from_email = config['smtp']['from_email']
+    smtp_server = config['smtp']['smtp_server']
+    smtp_port = config['smtp']['smtp_port']
+    smtp_user = config['smtp']['smtp_user']
+    smtp_password = config['smtp']['smtp_password']
 
     send_email(subject, content, to_email, from_email, smtp_server, smtp_port, smtp_user, smtp_password)
     return "Job updates sent."
+
+if __name__ == "__main__":
+    result = job(None)
+    print(result)
