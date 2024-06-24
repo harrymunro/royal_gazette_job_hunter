@@ -1,0 +1,11 @@
+{
+  "smtp": {
+    "to_email": "xxx@gmail.com",
+    "from_email": "xxx@gmail.com",
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 587,
+    "smtp_user": "xxx@gmail.com",
+    "smtp_password": "xxx"
+  },
+  "url": "https://www.royalgazette.com/jobs/"
+}
