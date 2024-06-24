@@ -7,7 +7,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def load_config(file_path='local_config_private.json'):
+def load_config(file_path='src/config.json'):
     with open(file_path, 'r') as file:
         return json.load(file)
 
